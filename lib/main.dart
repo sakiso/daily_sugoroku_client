@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'page/sugoroku/sugoroku_page.dart';
+import 'page/sugoroku_edit/sugoroku_edit_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,13 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'daily sugoroku',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       routes: {
-        // todo: lib下のconstファイルに切り出す
+        // todo: lib下のconstファイルに切り出せたらいいかも
         '/': (context) => const SugorokuPage(),
+        '/edit': (context) => const SugorokuEditPage(),
       },
     );
   }

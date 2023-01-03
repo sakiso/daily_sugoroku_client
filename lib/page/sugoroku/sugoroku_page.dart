@@ -5,13 +5,21 @@ class SugorokuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return sugorokuLayout();
-  }
-
-  Widget sugorokuLayout() {
-    return Center(
-        child: Column(children: const <Widget>[
-      Text("Sugoroku画面"),
-    ]));
+    return Scaffold(
+      // todo: appBarとかベースのScaffold切り出したい
+      appBar: AppBar(
+        title: const Text("daily sugoroku app!"),
+      ),
+      body: Center(
+        child: Column(children: [
+          const Text("sugoroku しようぜ"),
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/edit');
+              },
+              child: const Text("編集画面へ"))
+        ]),
+      ),
+    );
   }
 }
