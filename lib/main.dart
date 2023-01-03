@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'page/sugoroku/sugoroku_page.dart';
-import 'page/sugoroku_edit/sugoroku_edit_page.dart';
+import 'pages/sugoroku/sugoroku_page.dart';
+import 'pages/sugoroku_edit/sugoroku_edit_page.dart';
 
 void main() {
   runApp(const MyApp());
