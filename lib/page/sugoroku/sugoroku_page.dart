@@ -11,14 +11,16 @@ class SugorokuPage extends StatelessWidget {
         title: const Text("daily sugoroku app!"),
       ),
       body: Center(
-        child: Column(children: [
-          const Text("sugoroku しようぜ"),
-          TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/edit');
-              },
-              child: const Text("編集画面へ"))
+        child: Column(children: const [
+          Text("sugoroku しようぜ"),
         ]),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/edit');
+        },
+        // todo: 未登録と登録済みとでプラスと鉛筆のアイコン出し分けたい
+        child: const Icon(Icons.edit),
       ),
     );
   }
