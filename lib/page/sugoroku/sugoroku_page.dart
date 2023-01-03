@@ -6,7 +6,6 @@ class SugorokuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // todo: appBarとかベースのScaffold切り出したい
       appBar: AppBar(
         title: const Text("daily sugoroku app!"),
       ),
