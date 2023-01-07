@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:numberpicker/numberpicker.dart';
+
+import 'components/time_picker.dart';
 
 class SugorokuEditPage extends StatelessWidget {
   const SugorokuEditPage({Key? key}) : super(key: key);
@@ -20,14 +21,7 @@ class SugorokuEditPage extends StatelessWidget {
                   decoration: const InputDecoration(hintText: '予定名'),
                 ),
               ),
-              NumberPicker(
-                value: 0,
-                minValue: 0,
-                maxValue: 100,
-                axis: Axis.horizontal,
-                onChanged: (value) => (() => print(value)),
-              ),
-              const Text('時間'),
+              const TimePicker(),
             ],
           ),
           const Text("sugoroku 編集 しようぜ"),
