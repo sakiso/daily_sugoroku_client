@@ -36,7 +36,6 @@ dependencies:
 
   # ↑ここまで初期状態
   # ↓ここから追加分
-  flutter_picker: 2.0.5
   flutter_secure_storage: 7.0.1
   # ↑ここまで追加分
 
