@@ -7,7 +7,7 @@ final _requiredTimeProvider = StateProvider.autoDispose<int>((ref) => 0);
 // note: autoDispose修飾子を付けることで画面がpopされたときステートも破棄される
 
 class TimePicker extends ConsumerWidget {
-  // todo: 数字キー入力もできるようにしたほうがより良いかも
+  // todo: 数字キー入力もできるようにしたい
   const TimePicker({Key? key}) : super(key: key);
 
   @override
@@ -70,7 +70,7 @@ class TimePicker extends ConsumerWidget {
                     child: const Text(
                       '+ 0:30',
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 17,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -93,7 +93,7 @@ class TimePicker extends ConsumerWidget {
                       '+ 0:15',
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        fontSize: 15,
+                        fontSize: 17,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
