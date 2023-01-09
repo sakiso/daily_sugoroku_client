@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../constants.dart';
 
 final _requiredTimeProvider = StateProvider.autoDispose<int>((ref) => 0);
-// note: autoDispose修飾子を付けると画面がpopされたときステートも破棄される
+// note: autoDispose修飾子を付けることで画面がpopされたときステートも破棄される
 
 class TimePicker extends ConsumerWidget {
   const TimePicker({Key? key}) : super(key: key);
@@ -17,18 +17,30 @@ class TimePicker extends ConsumerWidget {
       width: 260,
       child: Column(
         children: [
-          Text(_formattedRequiredTime(_requiredTime)),
+          Text(
+            _formattedRequiredTime(_requiredTime),
+            style: TextStyle(
+                fontWeight: FontWeight.w200,
+                fontSize: 75,
+                color: Constants.darkGray),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           ElevatedButton(
             child: const Text('1h'),
             style: ElevatedButton.styleFrom(
               primary: Constants.lightBlue,
               onPrimary: Colors.black,
               shape: const StadiumBorder(),
-              fixedSize: const Size.fromWidth(double.maxFinite),
+              fixedSize: const Size(double.maxFinite, 50.0),
             ),
             onPressed: () {
               _addMinutes(ref, 60);
             },
+          ),
+          const SizedBox(
+            height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -37,10 +49,10 @@ class TimePicker extends ConsumerWidget {
                 child: ElevatedButton(
                   child: const Text('30min'),
                   style: ElevatedButton.styleFrom(
-                    primary: Constants.lightBlue,
-                    onPrimary: Colors.black,
-                    shape: const StadiumBorder(),
-                  ),
+                      primary: Constants.lightBlue,
+                      onPrimary: Colors.black,
+                      shape: const StadiumBorder(),
+                      fixedSize: const Size.fromHeight(50.0)),
                   onPressed: () {
                     _addMinutes(ref, 30);
                   },
@@ -56,6 +68,7 @@ class TimePicker extends ConsumerWidget {
                     primary: Constants.lightBlue,
                     onPrimary: Colors.black,
                     shape: const StadiumBorder(),
+                    fixedSize: const Size.fromHeight(50.0),
                   ),
                   onPressed: () {
                     _addMinutes(ref, 15);
@@ -64,17 +77,45 @@ class TimePicker extends ConsumerWidget {
               ),
             ],
           ),
-          TextButton(
-            onPressed: () {
-              _addMinutes(ref, 1);
-            },
-            child: const Text('+'),
+          const SizedBox(
+            height: 35,
           ),
-          TextButton(
-              onPressed: () {
-                _clearMinutes(ref);
-              },
-              child: const Text('clear'))
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  child: const Text('Clear'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Constants.inactiveGray,
+                    onPrimary: Colors.black,
+                    shape: const StadiumBorder(),
+                    fixedSize: const Size.fromHeight(50.0),
+                  ),
+                  onPressed: () {
+                    _clearMinutes(ref);
+                  },
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  child: const Text('OK'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Constants.green,
+                    onPrimary: Colors.black,
+                    shape: const StadiumBorder(),
+                    fixedSize: const Size.fromHeight(50.0),
+                  ),
+                  onPressed: () {
+                    // todo: 押すとProvider経由でStorageにデータを保存する
+                  },
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -82,6 +123,10 @@ class TimePicker extends ConsumerWidget {
 
   void _addMinutes(WidgetRef ref, int minutes) {
     // todo: 24:00以上になったら24:00で止まるようにする
+    final currentRequiredTime = ref.read(_requiredTimeProvider);
+    if (currentRequiredTime + minutes > 1440) {
+      return;
+    }
     ref.read(_requiredTimeProvider.notifier).update((state) => state + minutes);
   }
 

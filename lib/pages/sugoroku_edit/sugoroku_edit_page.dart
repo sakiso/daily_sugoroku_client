@@ -23,14 +23,13 @@ class SugorokuEditPage extends StatelessWidget {
               ),
             ],
           ),
-          const Text("sugoroku 編集 しようぜ"),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
             child: const Text("戻る"),
           ),
-          TimePicker(),
+          const TimePicker(),
         ]),
       ),
     );
