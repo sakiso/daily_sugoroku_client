@@ -21,7 +21,7 @@ class TimePicker extends ConsumerWidget {
             _formattedRequiredTime(_requiredTime),
             style: TextStyle(
                 fontWeight: FontWeight.w200,
-                fontSize: 75,
+                fontSize: 85,
                 color: Constants.darkGray),
           ),
           const SizedBox(
