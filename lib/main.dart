@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        // todo: lib下のconstファイルに切り出せたらいいかも
         '/': (context) => const SugorokuPage(),
         '/edit': (context) => const SugorokuEditPage(),
       },
