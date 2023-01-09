@@ -13,62 +13,70 @@ class TimePicker extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     int _requiredTime = ref.watch(_requiredTimeProvider);
 
-    return Column(
-      children: [
-        // todo: hh:mm形式にする
-        Text("$_requiredTime"),
-        // todo: 1hボタンの横幅長くしたい
-        ElevatedButton(
-          child: const Text('1h'),
-          style: ElevatedButton.styleFrom(
-            primary: Constants.lightBlue,
-            onPrimary: Colors.black,
-            shape: const StadiumBorder(),
-          ),
-          onPressed: () {
-            _addMinutes(ref, 60);
-          },
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              child: const Text('30min'),
-              style: ElevatedButton.styleFrom(
-                primary: Constants.lightBlue,
-                onPrimary: Colors.black,
-                shape: const StadiumBorder(),
-              ),
-              onPressed: () {
-                _addMinutes(ref, 30);
-              },
+    return SizedBox(
+      width: 260,
+      child: Column(
+        children: [
+          Text(_formattedRequiredTime(_requiredTime)),
+          ElevatedButton(
+            child: const Text('1h'),
+            style: ElevatedButton.styleFrom(
+              primary: Constants.lightBlue,
+              onPrimary: Colors.black,
+              shape: const StadiumBorder(),
+              fixedSize: const Size.fromWidth(double.maxFinite),
             ),
-            // todo: 1hボタンの幅に連動するようにスペース上けたい
-            ElevatedButton(
-              child: const Text('15min'),
-              style: ElevatedButton.styleFrom(
-                primary: Constants.lightBlue,
-                onPrimary: Colors.black,
-                shape: const StadiumBorder(),
-              ),
-              onPressed: () {
-                _addMinutes(ref, 15);
-              },
-            ),
-          ],
-        ),
-        TextButton(
-          onPressed: () {
-            _addMinutes(ref, 1);
-          },
-          child: const Text('+'),
-        ),
-        TextButton(
             onPressed: () {
-              _clearMinutes(ref);
+              _addMinutes(ref, 60);
             },
-            child: const Text('clear'))
-      ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  child: const Text('30min'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Constants.lightBlue,
+                    onPrimary: Colors.black,
+                    shape: const StadiumBorder(),
+                  ),
+                  onPressed: () {
+                    _addMinutes(ref, 30);
+                  },
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  child: const Text('15min'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Constants.lightBlue,
+                    onPrimary: Colors.black,
+                    shape: const StadiumBorder(),
+                  ),
+                  onPressed: () {
+                    _addMinutes(ref, 15);
+                  },
+                ),
+              ),
+            ],
+          ),
+          TextButton(
+            onPressed: () {
+              _addMinutes(ref, 1);
+            },
+            child: const Text('+'),
+          ),
+          TextButton(
+              onPressed: () {
+                _clearMinutes(ref);
+              },
+              child: const Text('clear'))
+        ],
+      ),
     );
   }
 
@@ -79,5 +87,12 @@ class TimePicker extends ConsumerWidget {
 
   void _clearMinutes(WidgetRef ref) {
     ref.read(_requiredTimeProvider.notifier).state = 0;
+  }
+
+  String _formattedRequiredTime(int minutes) {
+    // 例: input 135 -> output "02:15"
+    final hoursString = (minutes / 60).floor().toString().padLeft(2, "0");
+    final minutesString = (minutes % 60).toString().padLeft(2, "0");
+    return "$hoursString:$minutesString";
   }
 }
