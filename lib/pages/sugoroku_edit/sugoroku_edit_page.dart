@@ -23,13 +23,22 @@ class SugorokuEditPage extends StatelessWidget {
               ),
             ],
           ),
+          ElevatedButton(
+            child: const Text('モーダル'),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return const TimePicker();
+                  });
+            },
+          ),
           TextButton(
+            child: const Text("戻る"),
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text("戻る"),
           ),
-          const TimePicker(),
         ]),
       ),
     );

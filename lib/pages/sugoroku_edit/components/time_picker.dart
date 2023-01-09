@@ -13,112 +13,119 @@ class TimePicker extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     int _requiredTime = ref.watch(_requiredTimeProvider);
 
-    return SizedBox(
-      width: 260,
-      child: Column(
-        children: [
-          Text(
-            _formattedRequiredTime(_requiredTime),
-            style: TextStyle(
-                fontWeight: FontWeight.w200,
-                fontSize: 85,
-                color: Constants.darkGray),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ElevatedButton(
-            child: const Text('1h'),
-            style: ElevatedButton.styleFrom(
-              primary: Constants.lightBlue,
-              onPrimary: Colors.black,
-              shape: const StadiumBorder(),
-              fixedSize: const Size(double.maxFinite, 50.0),
-            ),
-            onPressed: () {
-              _addMinutes(ref, 60);
-            },
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  child: const Text('30min'),
-                  style: ElevatedButton.styleFrom(
+    return SimpleDialog(
+        contentPadding: const EdgeInsets.all(12),
+        children: <Widget>[
+          SimpleDialogOption(
+            child: SizedBox(
+              width: 200,
+              child: Column(
+                children: [
+                  Text(
+                    _formattedRequiredTime(_requiredTime),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w200,
+                        fontSize: 70,
+                        color: Constants.darkGray),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    child: const Text('1h'),
+                    style: ElevatedButton.styleFrom(
                       primary: Constants.lightBlue,
                       onPrimary: Colors.black,
                       shape: const StadiumBorder(),
-                      fixedSize: const Size.fromHeight(50.0)),
-                  onPressed: () {
-                    _addMinutes(ref, 30);
-                  },
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: ElevatedButton(
-                  child: const Text('15min'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Constants.lightBlue,
-                    onPrimary: Colors.black,
-                    shape: const StadiumBorder(),
-                    fixedSize: const Size.fromHeight(50.0),
+                      fixedSize: const Size(double.maxFinite, 50.0),
+                    ),
+                    onPressed: () {
+                      _addMinutes(ref, 60);
+                    },
                   ),
-                  onPressed: () {
-                    _addMinutes(ref, 15);
-                  },
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 35,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  child: const Text('Clear'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Constants.inactiveGray,
-                    onPrimary: Colors.black,
-                    shape: const StadiumBorder(),
-                    fixedSize: const Size.fromHeight(50.0),
+                  const SizedBox(
+                    height: 15,
                   ),
-                  onPressed: () {
-                    _clearMinutes(ref);
-                  },
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: ElevatedButton(
-                  child: const Text('OK'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Constants.green,
-                    onPrimary: Colors.black,
-                    shape: const StadiumBorder(),
-                    fixedSize: const Size.fromHeight(50.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          child: const Text('30min'),
+                          style: ElevatedButton.styleFrom(
+                              primary: Constants.lightBlue,
+                              onPrimary: Colors.black,
+                              shape: const StadiumBorder(),
+                              fixedSize: const Size.fromHeight(50.0)),
+                          onPressed: () {
+                            _addMinutes(ref, 30);
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                          child: const Text('15min'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Constants.lightBlue,
+                            onPrimary: Colors.black,
+                            shape: const StadiumBorder(),
+                            fixedSize: const Size.fromHeight(50.0),
+                          ),
+                          onPressed: () {
+                            _addMinutes(ref, 15);
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  onPressed: () {
-                    // todo: 押すとProvider経由でStorageにデータを保存する
-                  },
-                ),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          child: const Text('Clear'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Constants.inactiveGray,
+                            onPrimary: Colors.black,
+                            shape: const StadiumBorder(),
+                            fixedSize: const Size.fromHeight(50.0),
+                          ),
+                          onPressed: () {
+                            _clearMinutes(ref);
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                          child: const Text('OK'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Constants.green,
+                            onPrimary: Colors.black,
+                            shape: const StadiumBorder(),
+                            fixedSize: const Size.fromHeight(50.0),
+                          ),
+                          onPressed: () {
+                            // todo: 押すとProvider経由でStorageにデータを保存する
+                            Navigator.pop(context); //モーダルを閉じる
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ],
-      ),
-    );
+        ]);
   }
 
   void _addMinutes(WidgetRef ref, int minutes) {
