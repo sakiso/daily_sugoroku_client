@@ -25,16 +25,17 @@ class SugorokuEditPage extends StatelessWidget {
                     child: SizedBox(
                       height: 50.0,
                       child: TextFormField(
-                        // todo: 長い文字を入れると下側が切れる(Mangaponであった事象)
-                        // todo: 文字が上下中央寄せになっていない TextAlignVertical.centerしてるのに
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
+                          contentPadding:
+                              // 上下のpaddingを付けると見切れが発生するため明示的にゼロ指定
+                              const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           hintText: '予定名を入力してください',
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide(
                               color: ConstantColors.darkGray,
-                              width: 2.0,
+                              width: 2.5,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
