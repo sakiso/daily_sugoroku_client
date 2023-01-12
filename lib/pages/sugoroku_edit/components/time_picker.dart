@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../Constants.dart';
+import '../../../repositories/plan_repository.dart';
 
 final _requiredTimeProvider = StateProvider.autoDispose<int>((ref) => 0);
 // note: autoDispose修飾子を付けることで画面がpopされたときステートも破棄される
@@ -123,7 +124,10 @@ class TimePicker extends ConsumerWidget {
         TextButton(
           child: const Text("OK"),
           // todo: 押すとProvider経由でStorageにデータを保存する
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            PlanRepository().fetchPlans();
+            Navigator.pop(context);
+          },
         ),
       ],
     );

@@ -44,7 +44,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.daily_sugoroku_client"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 18 // secure_storage利用のため https://github.com/mogol/flutter_secure_storage#configure-android-version
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
