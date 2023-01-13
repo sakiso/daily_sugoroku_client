@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../Constants.dart';
 import '../../../repositories/plan_repository.dart';
 
-final _requiredTimeProvider = StateProvider.autoDispose<int>((ref) => 0);
+final _requiredMinutesProvider = StateProvider.autoDispose<int>((ref) => 0);
 // note: autoDispose修飾子を付けることで画面がpopされたときステートも破棄される
 
 class TimePicker extends ConsumerWidget {
@@ -13,7 +13,7 @@ class TimePicker extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int _requiredTime = ref.watch(_requiredTimeProvider);
+    int _requiredMinutes = ref.watch(_requiredMinutesProvider);
 
     return AlertDialog(
       contentPadding: const EdgeInsets.fromLTRB(35, 25, 35, 0),
@@ -21,7 +21,7 @@ class TimePicker extends ConsumerWidget {
         child: Column(
           children: [
             Text(
-              _formattedRequiredTime(_requiredTime),
+              _formattedRequiredMinutes(_requiredMinutes),
               style: TextStyle(
                   fontWeight: FontWeight.w200,
                   fontSize: 73,
@@ -134,19 +134,21 @@ class TimePicker extends ConsumerWidget {
   }
 
   void _addMinutes(WidgetRef ref, int minutes) {
-    final currentRequiredTime = ref.read(_requiredTimeProvider);
+    final currentRequiredMinutes = ref.read(_requiredMinutesProvider);
     // 1440分(=24時間)を超えないよう早期リターン
-    if (currentRequiredTime + minutes > 1440) {
+    if (currentRequiredMinutes + minutes > 1440) {
       return;
     }
-    ref.read(_requiredTimeProvider.notifier).update((state) => state + minutes);
+    ref
+        .read(_requiredMinutesProvider.notifier)
+        .update((state) => state + minutes);
   }
 
   void _clearMinutes(WidgetRef ref) {
-    ref.read(_requiredTimeProvider.notifier).state = 0;
+    ref.read(_requiredMinutesProvider.notifier).state = 0;
   }
 
-  String _formattedRequiredTime(int minutes) {
+  String _formattedRequiredMinutes(int minutes) {
     // 例: input 135 -> output "02:15"
     final hoursString = (minutes / 60).floor().toString().padLeft(2, "0");
     final minutesString = (minutes % 60).toString().padLeft(2, "0");
