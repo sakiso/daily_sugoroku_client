@@ -6,19 +6,24 @@ import '../models/plan_model.dart';
 import '../providers/sqflite_database_provider.dart';
 
 class PlanRepository {
-  // todo: リポジトリはDomainServiceのInterFaceを参照する？
-  Future<PlanModel> fetchPlans(WidgetRef ref) async {
-    // todo: DBのplansテーブルに接続する処理が別途必要？
-    final database = await ref.watch(databaseProvider);
+  // todo: リポジトリはDomainServiceのInterFaceを参照するようにする？
+  Future<List<PlanModel>> fetchPlans(WidgetRef ref) async {
+    final database = await ref.watch(databaseProvider) as Database;
 
-    final record = PlanModel(name: "hoge", requiredMinutes: 15);
-    await database.insert(TableNames.plans, record.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
-
-    final plan = await database
+    final plans = await database
         .query(TableNames.plans, where: 'name = ?', whereArgs: ['hoge']);
     // todo: ListじゃなくてPlanModelを返すようにする
-    print(plan);
-    return plan.fromMap();
+    print(plans);
+    return plans.map((plan) => PlanModel.fromMap(plan)).toList();
+  }
+
+  Future<int> savePlans(WidgetRef ref) async {
+    //todo: upsertに対応する
+    final database = await ref.watch(databaseProvider) as Database;
+
+    final record = PlanModel(name: "hoge", requiredMinutes: 15);
+    final savedId = await database.insert(TableNames.plans, record.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    return savedId;
   }
 }

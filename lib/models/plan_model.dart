@@ -3,7 +3,19 @@ class PlanModel {
   String name = "";
   int requiredMinutes = 0;
 
-  PlanModel({required this.name, required this.requiredMinutes});
+  PlanModel({required this.name, required this.requiredMinutes, this.id});
+
+  static PlanModel fromMap(Map map) {
+    final id = map['id'];
+    final name = map['name'];
+    final requiredMinutes = map['requiredMinutes'];
+
+    return PlanModel(
+      id: id,
+      name: name,
+      requiredMinutes: requiredMinutes,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -11,12 +23,5 @@ class PlanModel {
       'name': name,
       'requiredMinutes': requiredMinutes,
     };
-  }
-
-  PlanModel fromMap(Map map) {
-    id = map['id'];
-    name = map['name'];
-    requiredMinutes = map['requiredMinutes'];
-    return this;
   }
 }
