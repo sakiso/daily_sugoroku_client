@@ -39,7 +39,7 @@ dependencies:
   shared_preferences: 2.0.16 # 1/14時点では使ってないので消しても良い
   flutter_riverpod: 2.1.3
   sqflite: 2.2.3
-  path: 1.8.3 
+  path: 1.8.2
   # ↑ここまで追加分
 
 dev_dependencies:
