@@ -1,3 +1,4 @@
+import 'package:daily_sugoroku_client/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -11,11 +12,11 @@ class PlanRepository {
     final database = await ref.watch(databaseProvider);
 
     final record = PlanModel(name: "hoge", requiredMinutes: 15);
-    await database.insert("plans", record.toMap(),
+    await database.insert(TableNames.plans, record.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
 
-    final plan =
-        await database.query('plans', where: 'name = ?', whereArgs: ['hoge']);
+    final plan = await database
+        .query(TableNames.plans, where: 'name = ?', whereArgs: ['hoge']);
     // todo: ListじゃなくてPlanModelを返すようにする
     print(plan);
     return plan.fromMap();

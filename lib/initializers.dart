@@ -1,6 +1,8 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'constants.dart';
+
 /// アプリ起動時に一度だけ行いたいような初期化処理はここに記載する
 initializeDB() async {
   print("DB初期化");
@@ -11,7 +13,7 @@ initializeDB() async {
       return db.execute(
         '''
         CREATE TABLE IF NOT EXISTS 
-        plans(id INTEGER PRIMARY KEY, name TEXT, requiredMinutes INTEGER);
+        ${TableNames.plans}(id INTEGER PRIMARY KEY, name TEXT, requiredMinutes INTEGER);
         PRAGMA foreign_keys = ON;
         ''',
       );

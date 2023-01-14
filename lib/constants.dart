@@ -7,3 +7,7 @@ class ConstantColors {
   static Color inactiveGray = const Color.fromARGB(255, 224, 224, 224);
   static Color green = const Color.fromARGB(255, 89, 181, 94);
 }
+
+class TableNames {
+  static String plans = 'plans';
+}
