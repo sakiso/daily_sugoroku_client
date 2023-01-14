@@ -3,5 +3,5 @@ class PlanModel {
   String name = "";
   int requiredMinutes = 0;
 
-  PlanModel(this.name, this.requiredMinutes);
+  PlanModel({required this.name, required this.requiredMinutes});
 }
