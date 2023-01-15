@@ -39,7 +39,7 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                 children: [
                   IconButton(
                     iconSize: 30,
-                    onPressed: () => {},
+                    onPressed: () => {_removePlan(plan.id!)},
                     color: ConstantColors.cautionRed,
                     icon: const Icon(Icons.delete),
                   ),
@@ -113,5 +113,9 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
         ),
       ),
     );
+  }
+
+  void _removePlan(int id) {
+    ref.read(plansProvider.notifier).removePlan(id);
   }
 }

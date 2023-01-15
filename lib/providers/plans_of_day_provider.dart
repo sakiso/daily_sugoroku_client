@@ -16,6 +16,14 @@ class PlansNotifier extends StateNotifier<List<Plan>> {
     state = await PlanRepository.fetchPlans(ref);
   }
 
+  void removePlan(int id) {
+    /// note: stateはimutableなのでリストを再生成する必要がある
+    state = [
+      for (final plan in state)
+        if (plan.id != id) plan,
+    ];
+  }
+
   void addPlan() {
     // todo: addplan実装予定
     //     PlanRepository.savePlans(
