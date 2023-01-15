@@ -15,7 +15,7 @@ class PlanRepository {
 
     String? query;
     if (scheduledAt != null) {
-      query = ' AND scheduledAt = ${scheduledAt.toIso8601String()}';
+      query = 'scheduledAt = ${scheduledAt.toIso8601String()}';
     }
 
     List<Map<String, Object?>> plans = await database.query(
@@ -51,6 +51,7 @@ class PlanRepository {
     );
 
     // sqfliteがDATETIMEに対応していないので、TEXTに変換してから記録する
+    // todo: 検索のこと考えたらdatetimeじゃなくてYYYYMMDD(string)にしたほうが良いのでする。。。
     final mappedRecord = record.toMap();
     mappedRecord['scheduledAt'] = record.scheduledAt.toIso8601String();
 
@@ -60,5 +61,19 @@ class PlanRepository {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     return savedId;
+  }
+
+  static Future<int> deletePlan(
+    Ref ref, {
+    required int id,
+  }) async {
+    //todo: upsertに対応する
+    final database = await ref.read(databaseProvider) as Database;
+
+    final numberOfRowsDeleted = await database.delete(
+      TableNames.plans,
+      where: 'id = $id',
+    );
+    return numberOfRowsDeleted;
   }
 }

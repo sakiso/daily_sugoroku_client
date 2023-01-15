@@ -16,7 +16,10 @@ class PlansNotifier extends StateNotifier<List<Plan>> {
     state = await PlanRepository.fetchPlans(ref);
   }
 
-  void removePlan(int id) {
+  void removePlan(int id) async {
+    final numberOfRowsDeleted = await PlanRepository.deletePlan(ref, id: id);
+    if (numberOfRowsDeleted == 0) return; // 何も削除されなかった場合
+
     /// note: stateはimutableなのでリストを再生成する必要がある
     state = [
       for (final plan in state)
