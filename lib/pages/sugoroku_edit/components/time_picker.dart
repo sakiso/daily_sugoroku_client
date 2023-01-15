@@ -10,6 +10,7 @@ final _requiredMinutesProvider =
 
 class TimePicker extends ConsumerWidget {
   // todo: 数字キー入力もできるようにしたい
+  // todo: 角はもうちょっと丸めたい
   const TimePicker({Key? key}) : super(key: key);
 
   @override
@@ -124,9 +125,13 @@ class TimePicker extends ConsumerWidget {
         ),
         TextButton(
           child: const Text("OK"),
-          // todo: 押すとProvider経由でStorageにデータを保存する
           onPressed: () {
-            PlanRepository().fetchPlans(ref);
+            PlanRepository().savePlans(
+              ref,
+              name: "dummy",
+              requiredMinutes: 35,
+              scheduledAt: DateTime.now(),
+            );
             Navigator.pop(context);
           },
         ),
@@ -150,7 +155,7 @@ class TimePicker extends ConsumerWidget {
   }
 
   String _formattedRequiredMinutes(int minutes) {
-    // todo: Modelにあったほうがいいかも
+    // todo: Modelにあったほうがいいかも?
     // 例: input 135 -> output "02:15"
     final hoursString = (minutes / 60).floor().toString().padLeft(2, "0");
     final minutesString = (minutes % 60).toString().padLeft(2, "0");

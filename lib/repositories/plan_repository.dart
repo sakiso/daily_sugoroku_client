@@ -7,12 +7,20 @@ import '../providers/sqflite_database_provider.dart';
 
 class PlanRepository {
   // todo: リポジトリはDomainServiceのInterFaceを参照するようにする？
-  Future<List<PlanModel>> fetchPlans(WidgetRef ref) async {
+  Future<List<PlanModel>> fetchPlans(
+    WidgetRef ref, {
+    int? id,
+  }) async {
     final database = await ref.watch(databaseProvider) as Database;
+
+    String query = "";
+    if (id == null) {
+      query = ' AND id = ${id.toString()}';
+    }
 
     List<Map<String, Object?>> plans = await database.query(
       TableNames.plans,
-      where: 'name = ?',
+      where: query,
       whereArgs: ['hoge'],
     );
 
@@ -28,14 +36,19 @@ class PlanRepository {
     return convertedPlans.map((plan) => PlanModel.fromMap(plan)).toList();
   }
 
-  Future<int> savePlans(WidgetRef ref) async {
+  Future<int> savePlans(
+    WidgetRef ref, {
+    required String name,
+    required int requiredMinutes,
+    required DateTime scheduledAt,
+  }) async {
     //todo: upsertに対応する
     final database = await ref.watch(databaseProvider) as Database;
 
     final record = PlanModel(
-      name: "hoge",
-      requiredMinutes: 15,
-      scheduledAt: DateTime.now(),
+      name: name,
+      requiredMinutes: requiredMinutes,
+      scheduledAt: scheduledAt,
     );
 
     // sqfliteがDATETIMEに対応していないので、TEXTに変換してから記録する
@@ -47,6 +60,7 @@ class PlanRepository {
       mappedRecord,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    print(savedId);
     return savedId;
   }
 }
