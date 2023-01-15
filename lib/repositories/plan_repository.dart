@@ -7,7 +7,7 @@ import '../providers/sqflite_database_provider.dart';
 
 class PlanRepository {
   // todo: リポジトリはDomainServiceのInterFaceを参照するようにする？
-  static Future<List<PlanModel>> fetchPlans(
+  static Future<List<Plan>> fetchPlans(
     Ref ref, {
     DateTime? scheduledAt,
   }) async {
@@ -32,7 +32,7 @@ class PlanRepository {
       };
     }).toList();
 
-    return convertedPlans.map((plan) => PlanModel.fromMap(plan)).toList();
+    return convertedPlans.map((plan) => Plan.fromMap(plan)).toList();
   }
 
   static Future<int> savePlans(
@@ -44,7 +44,7 @@ class PlanRepository {
     //todo: upsertに対応する
     final database = await ref.watch(databaseProvider) as Database;
 
-    final record = PlanModel(
+    final record = Plan(
       name: name,
       requiredMinutes: requiredMinutes,
       scheduledAt: scheduledAt,

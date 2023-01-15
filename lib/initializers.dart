@@ -5,8 +5,6 @@ import 'constants.dart';
 
 /// アプリ起動時に一度だけ行いたいような初期化処理はここに記載する
 initializeDB() async {
-  print("DB初期化");
-
   final migrationScripts = {
     /// ここにMigration内容を追記していく。
     /// verが増えたらSetting(Constants)のDBverも更新すること

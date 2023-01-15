@@ -3,20 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../repositories/plan_repository.dart';
 
-final plansProvider =
-    StateNotifierProvider<PlansNotifier, List<PlanModel>>((ref) {
+final plansProvider = StateNotifierProvider<PlansNotifier, List<Plan>>((ref) {
   return PlansNotifier(ref);
 });
 
-class PlansNotifier extends StateNotifier<List<PlanModel>> {
+class PlansNotifier extends StateNotifier<List<Plan>> {
   Ref ref;
   // 空のリストとして初期化
   PlansNotifier(this.ref) : super([]);
 
   void fetchPlans() async {
     state = await PlanRepository.fetchPlans(ref);
-    // fixme: これ無限に走ってる
-    print('state: $state');
   }
 
   void addPlans() {
