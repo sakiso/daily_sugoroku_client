@@ -9,13 +9,13 @@ class PlanRepository {
   // todo: リポジトリはDomainServiceのInterFaceを参照するようにする？
   Future<List<PlanModel>> fetchPlans(
     WidgetRef ref, {
-    int? id,
+    DateTime? scheduledAt,
   }) async {
     final database = await ref.watch(databaseProvider) as Database;
 
     String query = "";
-    if (id == null) {
-      query = ' AND id = ${id.toString()}';
+    if (scheduledAt != null) {
+      query = ' AND scheduledAt = ${scheduledAt.toIso8601String()}';
     }
 
     List<Map<String, Object?>> plans = await database.query(
