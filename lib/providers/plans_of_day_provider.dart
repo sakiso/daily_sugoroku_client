@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../repositories/plan_repository.dart';
 
-final plansProvider = StateNotifierProvider<PlansNotifier, List<Plan>>((ref) {
-  return PlansNotifier(ref);
+final plansOfDayProvider =
+    StateNotifierProvider<PlansOfDayNotifier, List<Plan>>((ref) {
+  return PlansOfDayNotifier(ref);
 });
 
-class PlansNotifier extends StateNotifier<List<Plan>> {
+class PlansOfDayNotifier extends StateNotifier<List<Plan>> {
   Ref ref;
-  PlansNotifier(this.ref) : super([]);
+  PlansOfDayNotifier(this.ref) : super([]);
 
   void fetchPlans() async {
     state = await PlanRepository.fetchPlans(ref);

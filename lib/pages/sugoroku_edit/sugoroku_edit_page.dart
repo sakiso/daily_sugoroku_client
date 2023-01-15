@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/plan_model.dart';
 import '../../providers/plans_of_day_provider.dart';
+import '../../providers/sugoroku_edit_page_state_provider.dart';
 import 'components/time_picker.dart';
 
 class SugorokuEditPage extends ConsumerStatefulWidget {
@@ -19,12 +20,12 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    ref.watch(plansProvider.notifier).fetchPlans();
+    ref.watch(plansOfDayProvider.notifier).fetchPlans();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Plan> todayPlans = ref.watch(plansProvider);
+    List<Plan> todayPlans = ref.watch(plansOfDayProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -111,11 +112,14 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                 ),
               IconButton(
                 iconSize: 60,
-                onPressed: () => {_addBlankPlan()},
-                color: ConstantColors.lightBlue,
+                onPressed:
+                    _existIncompletePlan() ? null : () => {_addBlankPlan()},
+                color: ConstantColors.royalBlue,
+                disabledColor: ConstantColors.inactiveGray,
                 icon: const Icon(Icons.add_circle_rounded),
               ),
               TextButton(
+                // todo: Elevatedボタンにする
                 child: const Text("戻る"),
                 onPressed: () {
                   Navigator.pop(context);
@@ -148,18 +152,22 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
   }
 
   void _addBlankPlan() {
-    ref.read(plansProvider.notifier).addBlankPlan();
+    ref.read(plansOfDayProvider.notifier).addBlankPlan();
   }
 
   void _removePlan(int id) {
-    ref.read(plansProvider.notifier).removePlan(id);
+    ref.read(plansOfDayProvider.notifier).removePlan(id);
   }
 
   void _updatePlans(List<Plan> plans) {
-    ref.read(plansProvider.notifier).updatePlans(plans);
+    ref.read(plansOfDayProvider.notifier).updatePlans(plans);
   }
 
   void _editPlanName(String newPlanName, Plan targetPlan) {
-    ref.read(plansProvider.notifier).editPlanName(newPlanName, targetPlan);
+    ref.read(plansOfDayProvider.notifier).editPlanName(newPlanName, targetPlan);
+  }
+
+  bool _existIncompletePlan() {
+    return ref.watch(existIncompletePlanProvider);
   }
 }
