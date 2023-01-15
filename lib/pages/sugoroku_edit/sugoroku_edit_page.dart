@@ -137,6 +137,7 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                 ),
                 onPressed: () {
                   _updatePlans(todayPlans);
+                  Navigator.of(context).pop();
                 },
               ),
             ],
