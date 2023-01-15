@@ -1,3 +1,5 @@
+import '../utilities/format_minutes_to_hhmm.dart';
+
 class PlanModel {
   int? id;
   //todo: IDの採番はDomainServiceでやらす。永続化したときに確定する感じで
@@ -34,5 +36,12 @@ class PlanModel {
       'requiredMinutes': requiredMinutes,
       'scheduledAt': scheduledAt,
     };
+  }
+
+  String formattedRequiredMinutes() {
+    // 例: input 135 -> output "02:15"
+    //     input 0   -> output "--:--"
+    if (requiredMinutes == 0) return "--:--";
+    return formatMinutesToHHMM(requiredMinutes);
   }
 }

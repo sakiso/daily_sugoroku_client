@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../Constants.dart';
 import '../../../repositories/plan_repository.dart';
+import '../../../utilities/format_minutes_to_hhmm.dart';
 
 final _requiredMinutesProvider =
     StateProvider.autoDispose<int>((ref) => 0); // todo: providersに切り出すか
@@ -150,10 +151,6 @@ class TimePicker extends ConsumerWidget {
   }
 
   String _formattedRequiredMinutes(int minutes) {
-    // todo: Modelにあったほうがいいかも?
-    // 例: input 135 -> output "02:15"
-    final hoursString = (minutes / 60).floor().toString().padLeft(2, "0");
-    final minutesString = (minutes % 60).toString().padLeft(2, "0");
-    return "$hoursString:$minutesString";
+    return formatMinutesToHHMM(minutes);
   }
 }

@@ -19,16 +19,12 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // ref.read(plansProvider);
     ref.watch(plansProvider.notifier).fetchPlans();
   }
 
   @override
   Widget build(BuildContext context) {
     List<PlanModel> todayPlans = ref.watch(plansProvider);
-    // print('fetched plans = $todayPlans');
-
-    // PlansNotifier.fetchPlans();
 
     return Scaffold(
       appBar: AppBar(
@@ -85,7 +81,7 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                         // todo: childはrequiredMinutesProviderから受け取る。
                         // todo: 時間が設定されていなければ'--:--', 設定されたらその時間を表示
                         // todo: 時間が設定されたらフォントカラーや背景色をいい感じの色にする
-                        child: const Text('所要時間'),
+                        child: Text(plan.formattedRequiredMinutes()),
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.black87,
                         ),
