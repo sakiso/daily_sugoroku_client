@@ -18,7 +18,6 @@ class SugorokuPage extends StatelessWidget {
         onPressed: () {
           Navigator.pushNamed(context, '/edit');
         },
-        // todo: 未登録と登録済みとでプラスと鉛筆のアイコン出し分けたい
         child: const Icon(Icons.edit),
       ),
     );

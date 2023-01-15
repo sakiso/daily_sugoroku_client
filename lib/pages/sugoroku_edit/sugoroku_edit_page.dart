@@ -101,7 +101,7 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                             showDialog(
                               context: context,
                               builder: (_) {
-                                return const TimePicker();
+                                return TimePicker(plan);
                               },
                             );
                           },
@@ -126,6 +126,7 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                 },
               ),
               ElevatedButton(
+                // todo: 入力未完了のやつがいるときはOKボタンも押せなくする
                 child: const Text(
                   'OK',
                   style: TextStyle(

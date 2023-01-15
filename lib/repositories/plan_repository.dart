@@ -56,8 +56,6 @@ class PlanRepository {
       );
     }
     final results = await batch.commit();
-    print('results');
-    print(results);
     return results;
   }
 

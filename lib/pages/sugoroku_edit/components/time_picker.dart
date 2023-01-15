@@ -1,8 +1,9 @@
+import 'package:daily_sugoroku_client/models/plan_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../Constants.dart';
-import '../../../repositories/plan_repository.dart';
+import '../../../providers/plans_of_day_provider.dart';
 import '../../../utilities/format_minutes_to_hhmm.dart';
 
 final _requiredMinutesProvider =
@@ -10,12 +11,14 @@ final _requiredMinutesProvider =
 // note: autoDispose修飾子を付けることで画面がpopされたときステートも破棄される
 
 class TimePicker extends ConsumerWidget {
+  final Plan targetPlan;
   // todo: 数字キー入力もできるようにしたい
   // todo: 角はもうちょっと丸めたい
-  const TimePicker({Key? key}) : super(key: key);
+  const TimePicker(this.targetPlan, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // todo: すでに時間が設定されていても初期表示時0から始まるので、targetPlan使ってどうにかしたい
     int _requiredMinutes = ref.watch(_requiredMinutesProvider);
 
     return AlertDialog(
@@ -47,6 +50,7 @@ class TimePicker extends ConsumerWidget {
             ),
             ElevatedButton(
               child: const Text(
+                // todo: パっと見hh:mmっぽく見えないのでなんとかする
                 '+ 1:00',
                 style: TextStyle(
                   fontSize: 25,
@@ -127,7 +131,7 @@ class TimePicker extends ConsumerWidget {
         TextButton(
           child: const Text("OK"),
           onPressed: () {
-            // todo: provider経由で更新
+            _savePickedTime(ref, _requiredMinutes);
             Navigator.pop(context);
           },
         ),
@@ -152,5 +156,11 @@ class TimePicker extends ConsumerWidget {
 
   String _formattedRequiredMinutes(int minutes) {
     return formatMinutesToHHMM(minutes);
+  }
+
+  void _savePickedTime(WidgetRef ref, int requiredMinutes) {
+    ref
+        .read(plansOfDayProvider.notifier)
+        .editPlanRequiredMinutes(requiredMinutes, targetPlan);
   }
 }

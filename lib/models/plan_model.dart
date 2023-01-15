@@ -51,7 +51,6 @@ class Plan {
     int? requiredMinutes,
     DateTime? scheduledAt,
   }) {
-    print('copy!');
     return Plan(
       id: id ?? this.id,
       name: name ?? this.name,
