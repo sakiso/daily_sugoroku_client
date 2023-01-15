@@ -126,12 +126,7 @@ class TimePicker extends ConsumerWidget {
         TextButton(
           child: const Text("OK"),
           onPressed: () {
-            PlanRepository().savePlans(
-              ref,
-              name: "dummy",
-              requiredMinutes: 35,
-              scheduledAt: DateTime.now(),
-            );
+            // todo: provider経由で更新
             Navigator.pop(context);
           },
         ),

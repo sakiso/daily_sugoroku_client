@@ -1,5 +1,7 @@
 class PlanModel {
-  int? id; //todo: IDの採番はDomainServiceでやらす。永続化したときに確定する感じで
+  int? id;
+  //todo: IDの採番はDomainServiceでやらす。永続化したときに確定する感じで
+  //todo: modelってクラス名じゃないほうが良いかも 例を調べる
   String name = "";
   int requiredMinutes = 0;
   DateTime scheduledAt;

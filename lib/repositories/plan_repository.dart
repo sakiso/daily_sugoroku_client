@@ -7,13 +7,13 @@ import '../providers/sqflite_database_provider.dart';
 
 class PlanRepository {
   // todo: リポジトリはDomainServiceのInterFaceを参照するようにする？
-  Future<List<PlanModel>> fetchPlans(
-    WidgetRef ref, {
+  static Future<List<PlanModel>> fetchPlans(
+    Ref ref, {
     DateTime? scheduledAt,
   }) async {
     final database = await ref.watch(databaseProvider) as Database;
 
-    String query = "";
+    String? query;
     if (scheduledAt != null) {
       query = ' AND scheduledAt = ${scheduledAt.toIso8601String()}';
     }
@@ -32,12 +32,11 @@ class PlanRepository {
       };
     }).toList();
 
-    print(convertedPlans);
     return convertedPlans.map((plan) => PlanModel.fromMap(plan)).toList();
   }
 
-  Future<int> savePlans(
-    WidgetRef ref, {
+  static Future<int> savePlans(
+    Ref ref, {
     required String name,
     required int requiredMinutes,
     required DateTime scheduledAt,
@@ -60,7 +59,6 @@ class PlanRepository {
       mappedRecord,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    print(savedId);
     return savedId;
   }
 }
