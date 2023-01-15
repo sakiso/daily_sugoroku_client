@@ -37,6 +37,12 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
             for (final plan in todayPlans)
               Row(
                 children: [
+                  IconButton(
+                    iconSize: 30,
+                    onPressed: () => {},
+                    color: ConstantColors.cautionRed,
+                    icon: const Icon(Icons.delete),
+                  ),
                   Expanded(
                       flex: 3,
                       child: SizedBox(

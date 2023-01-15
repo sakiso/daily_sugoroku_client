@@ -16,8 +16,8 @@ class PlansNotifier extends StateNotifier<List<Plan>> {
     state = await PlanRepository.fetchPlans(ref);
   }
 
-  void addPlans() {
-    // todo: addplans実装予定
+  void addPlan() {
+    // todo: addplan実装予定
     //     PlanRepository.savePlans(
     //   ref,
     //   name: "dummy",

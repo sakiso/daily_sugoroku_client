@@ -11,6 +11,7 @@ class ConstantColors {
   static Color darkGray = const Color.fromARGB(255, 91, 91, 91);
   static Color inactiveGray = const Color.fromARGB(255, 224, 224, 224);
   static Color green = const Color.fromARGB(255, 89, 181, 94);
+  static Color cautionRed = const Color.fromARGB(255, 183, 62, 80);
 }
 
 class TableNames {
