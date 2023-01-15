@@ -21,7 +21,6 @@ class PlanRepository {
     List<Map<String, Object?>> plans = await database.query(
       TableNames.plans,
       where: query,
-      whereArgs: ['hoge'],
     );
 
     // sqfliteがDATETIMEに対応していないので、TEXTからDataTimeに変換する
@@ -35,29 +34,18 @@ class PlanRepository {
     return convertedPlans.map((plan) => Plan.fromMap(plan)).toList();
   }
 
-  static Future<int> savePlans(
-    Ref ref, {
-    required String name,
-    required int requiredMinutes,
-    required DateTime scheduledAt,
-  }) async {
-    //todo: upsertに対応する
+  static Future<int> savePlan(Ref ref, Plan plan) async {
+    //todo: upsertに対応する もうしてる？
     final database = await ref.watch(databaseProvider) as Database;
-
-    final record = Plan(
-      name: name,
-      requiredMinutes: requiredMinutes,
-      scheduledAt: scheduledAt,
-    );
 
     // sqfliteがDATETIMEに対応していないので、TEXTに変換してから記録する
     // todo: 検索のこと考えたらdatetimeじゃなくてYYYYMMDD(string)にしたほうが良いのでする。。。
-    final mappedRecord = record.toMap();
-    mappedRecord['scheduledAt'] = record.scheduledAt.toIso8601String();
+    final record = plan.toMap();
+    record['scheduledAt'] = record['scheduledAt'].toIso8601String();
 
     final savedId = await database.insert(
       TableNames.plans,
-      mappedRecord,
+      record,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     return savedId;

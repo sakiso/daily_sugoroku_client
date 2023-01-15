@@ -9,7 +9,6 @@ final plansProvider = StateNotifierProvider<PlansNotifier, List<Plan>>((ref) {
 
 class PlansNotifier extends StateNotifier<List<Plan>> {
   Ref ref;
-  // 空のリストとして初期化
   PlansNotifier(this.ref) : super([]);
 
   void fetchPlans() async {
@@ -27,7 +26,8 @@ class PlansNotifier extends StateNotifier<List<Plan>> {
     ];
   }
 
-  void addPlan() {
+  void addPlan(Plan plan) async {
+    await PlanRepository.savePlan(ref, plan);
     // todo: addplan実装予定
     //     PlanRepository.savePlans(
     //   ref,
@@ -35,5 +35,9 @@ class PlansNotifier extends StateNotifier<List<Plan>> {
     //   requiredMinutes: 35,
     //   scheduledAt: DateTime.now(),
     // );
+  }
+
+  void updatePlan(Plan plan) async {
+    await PlanRepository.savePlan(ref, plan);
   }
 }

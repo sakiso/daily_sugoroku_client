@@ -48,7 +48,12 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                       child: SizedBox(
                         height: 50.0,
                         child: TextFormField(
+                          initialValue: plan.name,
                           textAlignVertical: TextAlignVertical.center,
+                          onFieldSubmitted: (newPlanName) {
+                            plan.name = newPlanName;
+                            _updatePlan(plan);
+                          },
                           decoration: InputDecoration(
                             contentPadding:
                                 // 上下のpaddingを付けると見切れが発生するため明示的にゼロ指定
@@ -100,6 +105,13 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                       ),
                     ),
                   ),
+                  IconButton(
+                    // todo: これボタンじゃなくてフォーカスアウトとかで保存するか
+                    iconSize: 30,
+                    onPressed: () => {_updatePlan(plan)},
+                    color: ConstantColors.lightBlue,
+                    icon: const Icon(Icons.add_circle_outlined),
+                  ),
                 ],
                 // todo: このへんにプラスボタンでフォーム増やせるようにする。forで回す数を増やす感じ？
               ),
@@ -117,5 +129,9 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
 
   void _removePlan(int id) {
     ref.read(plansProvider.notifier).removePlan(id);
+  }
+
+  void _updatePlan(Plan plan) {
+    ref.read(plansProvider.notifier).updatePlan(plan);
   }
 }
