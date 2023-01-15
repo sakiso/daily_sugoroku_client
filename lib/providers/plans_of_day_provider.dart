@@ -37,13 +37,8 @@ class PlansNotifier extends StateNotifier<List<Plan>> {
     print('newPlan: ${targetPlan.hashCode}');
 
     for (final plan in state) {
-      print('olgPlan: ${plan.hashCode}');
+      print('olgPlan: ${plan.name}');
     }
-
-    print('state0: ${state[0].name}');
-    print('state1: ${state[1].name}');
-    print('state2: ${state[2].name}');
-    print('state3: ${state[3].name}');
 
     /// stateの特定のindexの要素を置換する。ここでは永続化は実施しない
     // todo: updateとごっちゃになる もっといい名前ないかな
@@ -55,11 +50,9 @@ class PlansNotifier extends StateNotifier<List<Plan>> {
         else
           orginalPlan
     ];
-
-    print('editedState0: ${state[0].name}');
-    print('editedState1: ${state[1].name}');
-    print('editedState2: ${state[2].name}');
-    print('editedState3: ${state[3].name}');
+    for (final plan in state) {
+      print('newPlan: ${plan.name}');
+    }
 
     // state = [
     //   for (var i = 0; i < state.length; i++)

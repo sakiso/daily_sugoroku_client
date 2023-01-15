@@ -53,7 +53,7 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                           child: TextFormField(
                             key: Key(plan.hashCode.toString()),
                             initialValue: plan.name,
-                            onChanged: (newPlanName) =>
+                            onFieldSubmitted: (newPlanName) =>
                                 {_editPlanName(newPlanName, plan)},
                             textAlignVertical: TextAlignVertical.center,
                             decoration: InputDecoration(
