@@ -61,11 +61,11 @@ class SugorokuEditPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TextButton(
-                      // todo: 時間が設定されていなければ'00:00', 設定されたらその時間を表示
+                      // todo: 時間が設定されていなければ'--:--', 設定されたらその時間を表示
                       // todo: 時間が設定されたらフォントカラーや背景色をいい感じの色にする
                       child: const Text('所要時間'),
                       style: TextButton.styleFrom(
-                        primary: Colors.black87,
+                        foregroundColor: Colors.black87,
                       ),
                       onPressed: () {
                         showDialog(

@@ -10,20 +10,46 @@ class PlanRepository {
   Future<List<PlanModel>> fetchPlans(WidgetRef ref) async {
     final database = await ref.watch(databaseProvider) as Database;
 
-    final plans = await database
-        .query(TableNames.plans, where: 'name = ?', whereArgs: ['hoge']);
-    // todo: ListじゃなくてPlanModelを返すようにする
-    print(plans);
-    return plans.map((plan) => PlanModel.fromMap(plan)).toList();
+    List<Map<String, Object?>> plans = await database.query(
+      TableNames.plans,
+      where: 'name = ?',
+      whereArgs: ['hoge'],
+    );
+
+    // todo: 2回実行するとUnsupported operation: read-onlyといわれる
+
+    // sqfliteがDATETIMEに対応していないので、TEXTからDataTimeに変換する
+    final mappedPlans = plans.map((plan) {
+      return {
+        ...plan,
+        'scheduledAt': DateTime.parse(plan['scheduledAt'] as String),
+      };
+    }).toList();
+    var convertedPlans = mappedPlans.toList();
+
+    print(convertedPlans);
+    return convertedPlans.map((plan) => PlanModel.fromMap(plan)).toList();
   }
 
   Future<int> savePlans(WidgetRef ref) async {
     //todo: upsertに対応する
     final database = await ref.watch(databaseProvider) as Database;
 
-    final record = PlanModel(name: "hoge", requiredMinutes: 15);
-    final savedId = await database.insert(TableNames.plans, record.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    final record = PlanModel(
+      name: "hoge",
+      requiredMinutes: 15,
+      scheduledAt: DateTime.now(),
+    );
+
+    // sqfliteがDATETIMEに対応していないので、TEXTに変換してから記録する
+    final mappedRecord = record.toMap();
+    mappedRecord['scheduledAt'] = record.scheduledAt.toIso8601String();
+
+    final savedId = await database.insert(
+      TableNames.plans,
+      mappedRecord,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
     return savedId;
   }
 }

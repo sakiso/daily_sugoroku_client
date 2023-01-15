@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+class Settings {
+  /// セキュア情報はsecure_storageを使うこと
+  static int currentDBversion = 2;
+}
+
 class ConstantColors {
   static Color lightBlue = const Color.fromARGB(255, 134, 193, 245);
   static Color royalBlue = const Color.fromARGB(255, 60, 105, 225);

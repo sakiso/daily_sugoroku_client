@@ -5,7 +5,7 @@ import '../../../Constants.dart';
 import '../../../repositories/plan_repository.dart';
 
 final _requiredMinutesProvider =
-    StateProvider.autoDispose<int>((ref) => 0); // todo: providersに切り出す
+    StateProvider.autoDispose<int>((ref) => 0); // todo: providersに切り出すか
 // note: autoDispose修飾子を付けることで画面がpopされたときステートも破棄される
 
 class TimePicker extends ConsumerWidget {
