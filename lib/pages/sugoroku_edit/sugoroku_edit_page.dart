@@ -153,6 +153,7 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
   }
 
   void _addBlankPlan() {
+    // todo: トランジションつけてふわっとフォーム増やしたい
     ref.read(plansOfDayProvider.notifier).addBlankPlan();
   }
 
