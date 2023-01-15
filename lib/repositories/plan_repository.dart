@@ -16,16 +16,13 @@ class PlanRepository {
       whereArgs: ['hoge'],
     );
 
-    // todo: 2回実行するとUnsupported operation: read-onlyといわれる
-
     // sqfliteがDATETIMEに対応していないので、TEXTからDataTimeに変換する
-    final mappedPlans = plans.map((plan) {
+    final convertedPlans = plans.map((plan) {
       return {
         ...plan,
         'scheduledAt': DateTime.parse(plan['scheduledAt'] as String),
       };
     }).toList();
-    var convertedPlans = mappedPlans.toList();
 
     print(convertedPlans);
     return convertedPlans.map((plan) => PlanModel.fromMap(plan)).toList();
