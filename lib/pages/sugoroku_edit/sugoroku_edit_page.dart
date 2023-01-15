@@ -8,13 +8,24 @@ import '../../models/plan_model.dart';
 import '../../providers/plans_of_day_provider.dart';
 import 'components/time_picker.dart';
 
-class SugorokuEditPage extends ConsumerWidget {
+class SugorokuEditPage extends ConsumerStatefulWidget {
   const SugorokuEditPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    List<PlanModel> todayPlans = ref.watch(plansProvider);
+  SugorokuEditPageState createState() => SugorokuEditPageState();
+}
+
+class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // ref.read(plansProvider);
     ref.watch(plansProvider.notifier).fetchPlans();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<PlanModel> todayPlans = ref.watch(plansProvider);
     // print('fetched plans = $todayPlans');
 
     // PlansNotifier.fetchPlans();

@@ -13,13 +13,13 @@ class PlansNotifier extends StateNotifier<List<PlanModel>> {
   // 空のリストとして初期化
   PlansNotifier(this.ref) : super([]);
 
-  fetchPlans() async {
+  void fetchPlans() async {
     state = await PlanRepository.fetchPlans(ref);
     // fixme: これ無限に走ってる
     print('state: $state');
   }
 
-  addPlans() {
+  void addPlans() {
     // todo: addplans実装予定
     //     PlanRepository.savePlans(
     //   ref,
