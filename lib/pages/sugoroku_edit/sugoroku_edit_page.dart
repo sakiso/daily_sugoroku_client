@@ -41,7 +41,7 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                   children: [
                     IconButton(
                       iconSize: 30,
-                      onPressed: () => {_removePlan(plan.id!)},
+                      onPressed: () => {_removePlan(plan)},
                       color: ConstantColors.cautionRed,
                       icon: const Icon(Icons.delete),
                     ),
@@ -141,7 +141,6 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                     width: 30,
                   ),
                   ElevatedButton(
-                    // todo: 入力未完了のやつがいるときはOKボタンも押せなくする
                     child: const Text(
                       'OK',
                       style: TextStyle(
@@ -157,7 +156,7 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                     ),
                     onPressed: _allPlanEntryCompleted()
                         ? () {
-                            _updatePlans(todayPlans);
+                            _savePlans(todayPlans);
                             Navigator.of(context).pop();
                           }
                         : null,
@@ -176,12 +175,12 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
     ref.read(plansOfDayProvider.notifier).addBlankPlan();
   }
 
-  void _removePlan(int id) {
-    ref.read(plansOfDayProvider.notifier).removePlan(id);
+  void _removePlan(Plan plan) {
+    ref.read(plansOfDayProvider.notifier).removePlan(plan);
   }
 
-  void _updatePlans(List<Plan> plans) {
-    ref.read(plansOfDayProvider.notifier).updatePlans(plans);
+  void _savePlans(List<Plan> plans) {
+    ref.read(plansOfDayProvider.notifier).savePlans(plans);
   }
 
   void _editPlanName(String newPlanName, Plan targetPlan) {

@@ -2,7 +2,6 @@ import '../utilities/format_minutes_to_hhmm.dart';
 
 class Plan {
   int? id;
-  //todo: IDの採番はDomainServiceでやらす。永続化したときに確定する感じで
   String? name = "";
   int? requiredMinutes = 0;
   String scheduledAtDate; // yyyyMMdd形式

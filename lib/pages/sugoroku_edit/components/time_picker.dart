@@ -50,8 +50,7 @@ class TimePicker extends ConsumerWidget {
             ),
             ElevatedButton(
               child: const Text(
-                // todo: パっと見hh:mmっぽく見えないのでなんとかする
-                '+ 1:00',
+                '+ 1 h',
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w400,
@@ -76,7 +75,7 @@ class TimePicker extends ConsumerWidget {
                 Expanded(
                   child: ElevatedButton(
                     child: const Text(
-                      '+ 0:30',
+                      '+ 30 min',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w500,
@@ -98,7 +97,7 @@ class TimePicker extends ConsumerWidget {
                 Expanded(
                   child: ElevatedButton(
                     child: const Text(
-                      '+ 0:15',
+                      '+ 15 min',
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 17,

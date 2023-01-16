@@ -17,15 +17,18 @@ class PlansOfDayNotifier extends StateNotifier<List<Plan>> {
     state = await PlanRepository.fetchPlans(ref);
   }
 
-  void removePlan(int id) async {
-    // todo: まだcommitしてなくてid振られてないplanが消せない
-    final numberOfRowsDeleted = await PlanRepository.deletePlan(ref, id: id);
-    if (numberOfRowsDeleted == 0) return; // 何も削除されなかった場合
+  void removePlan(Plan targetPlan) async {
+    // planのidがnullでない、すなわちDB保存済みの場合はDBからも削除
+    if (targetPlan.id != null) {
+      final numberOfRowsDeleted =
+          await PlanRepository.deletePlan(ref, id: targetPlan.id!);
+      if (numberOfRowsDeleted == 0) return; // 何も削除されなかった場合
+    }
 
     /// note: stateはimutableなのでリストを再生成する必要がある
     state = [
       for (final plan in state)
-        if (plan.id != id) plan,
+        if (plan.hashCode != targetPlan.hashCode) plan,
     ];
   }
 
@@ -60,7 +63,7 @@ class PlansOfDayNotifier extends StateNotifier<List<Plan>> {
     ];
   }
 
-  void updatePlans(List<Plan> plans) async {
+  void savePlans(List<Plan> plans) async {
     // todo: こっちのメソッドの名前もsavePlansでいい
     await PlanRepository.savePlans(ref, plans);
   }
