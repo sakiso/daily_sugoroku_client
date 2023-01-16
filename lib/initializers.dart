@@ -16,6 +16,7 @@ initializeDB() async {
     onCreate: (db, version) {
       return db.execute(
         // note: migrationするときは同じテーブルになるようここも更新すること
+        // note: scheduledAtはyyyyMMdd形式
         '''
         CREATE TABLE IF NOT EXISTS 
         ${TableNames.plans}(
