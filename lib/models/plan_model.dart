@@ -5,12 +5,12 @@ class Plan {
   //todo: IDの採番はDomainServiceでやらす。永続化したときに確定する感じで
   String? name = "";
   int? requiredMinutes = 0;
-  DateTime scheduledAt;
+  String scheduledAtDate; // yyyyMMdd形式
 
   Plan({
     this.name,
     this.requiredMinutes,
-    required this.scheduledAt,
+    required this.scheduledAtDate,
     this.id,
   });
 
@@ -18,13 +18,13 @@ class Plan {
     final id = map['id'];
     final name = map['name'];
     final requiredMinutes = map['requiredMinutes'];
-    final scheduledAt = map['scheduledAt'];
+    final scheduledAtDate = map['scheduledAt'];
 
     return Plan(
       id: id,
       name: name,
       requiredMinutes: requiredMinutes,
-      scheduledAt: scheduledAt,
+      scheduledAtDate: scheduledAtDate,
     );
   }
 
@@ -33,7 +33,7 @@ class Plan {
       'id': id,
       'name': name,
       'requiredMinutes': requiredMinutes,
-      'scheduledAt': scheduledAt,
+      'scheduledAt': scheduledAtDate,
     };
   }
 
@@ -55,7 +55,7 @@ class Plan {
       id: id ?? this.id,
       name: name ?? this.name,
       requiredMinutes: requiredMinutes ?? this.requiredMinutes,
-      scheduledAt: scheduledAt ?? this.scheduledAt,
+      scheduledAtDate: scheduledAtDate,
     );
   }
 }

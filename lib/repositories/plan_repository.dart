@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:daily_sugoroku_client/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
@@ -25,15 +23,7 @@ class PlanRepository {
       where: query,
     );
 
-    // sqfliteがDATETIMEに対応していないので、TEXTからDataTimeに変換する
-    final convertedPlans = plans.map((plan) {
-      return {
-        ...plan,
-        'scheduledAt': DateTime.parse(plan['scheduledAt'] as String),
-      };
-    }).toList();
-
-    return convertedPlans.map((plan) => Plan.fromMap(plan)).toList();
+    return plans.map((plan) => Plan.fromMap(plan)).toList();
   }
 
   static Future<List<Object?>> savePlans(Ref ref, List<Plan> plans) async {
@@ -41,11 +31,6 @@ class PlanRepository {
     final database = await ref.watch(databaseProvider) as Database;
 
     final records = plans.map((plan) => plan.toMap()).toList();
-    for (var record in records) {
-      // sqfliteがDATETIMEに対応していないので、TEXTに変換してから記録する
-      // todo: 検索のこと考えたらdatetimeじゃなくてYYYYMMDD(string)にしたほうが良いのでする。。。
-      record['scheduledAt'] = record['scheduledAt'].toIso8601String();
-    }
 
     final batch = database.batch();
     for (var record in records) {

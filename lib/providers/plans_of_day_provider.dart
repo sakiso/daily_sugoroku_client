@@ -2,6 +2,7 @@ import 'package:daily_sugoroku_client/models/plan_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../repositories/plan_repository.dart';
+import '../utilities/format_datetime_to_yyyymmdd.dart';
 
 final plansOfDayProvider =
     StateNotifierProvider<PlansOfDayNotifier, List<Plan>>((ref) {
@@ -54,7 +55,7 @@ class PlansOfDayNotifier extends StateNotifier<List<Plan>> {
     state = [
       ...state,
       Plan(
-        scheduledAt: DateTime.now(),
+        scheduledAtDate: formatDateTimeToYyyyMmDd(DateTime.now()),
       ),
     ];
   }
