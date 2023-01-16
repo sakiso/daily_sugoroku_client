@@ -26,6 +26,8 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
   @override
   Widget build(BuildContext context) {
     List<Plan> todayPlans = ref.watch(plansOfDayProvider);
+    // todo: ゴミ箱は右側にバツボタン出す
+    // todo: 3点のやつで掴んで順番変えられるようにする -> PlanにDisplayOrderが必要
 
     return Scaffold(
       appBar: AppBar(
