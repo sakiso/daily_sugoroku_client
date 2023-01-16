@@ -116,33 +116,54 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                 disabledColor: ConstantColors.inactiveGray,
                 icon: const Icon(Icons.add_circle_rounded),
               ),
-              TextButton(
-                // todo: Elevatedボタンにする
-                child: const Text("戻る"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ElevatedButton(
-                // todo: 入力未完了のやつがいるときはOKボタンも押せなくする
-                child: const Text(
-                  'OK',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 17,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    child: const Text(
+                      '戻る',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: ConstantColors.inactiveGray,
+                      shape: const StadiumBorder(),
+                      fixedSize: const Size.fromHeight(50.0),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  backgroundColor: ConstantColors.green,
-                  shape: const StadiumBorder(),
-                  fixedSize: const Size.fromHeight(50.0),
-                ),
-                onPressed: () {
-                  _updatePlans(todayPlans);
-                  Navigator.of(context).pop();
-                },
-              ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  ElevatedButton(
+                    // todo: 入力未完了のやつがいるときはOKボタンも押せなくする
+                    child: const Text(
+                      'OK',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: ConstantColors.green,
+                      shape: const StadiumBorder(),
+                      fixedSize: const Size.fromHeight(50.0),
+                    ),
+                    onPressed: _allPlanEntryCompleted()
+                        ? () {
+                            _updatePlans(todayPlans);
+                            Navigator.of(context).pop();
+                          }
+                        : null,
+                  ),
+                ],
+              )
             ],
           ),
         ),
@@ -169,5 +190,18 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
 
   bool _existIncompletePlan() {
     return ref.watch(existIncompletePlanProvider);
+  }
+
+  bool _allPlanEntryCompleted() {
+    if (_existIncompletePlan()) {
+      // 入力途中のPlanがある
+      return false;
+    } else if (ref.watch(plansOfDayProvider).isEmpty) {
+      // Planが一つも存在しない
+      return false;
+    } else {
+      // Planがすべて入力完了している
+      return true;
+    }
   }
 }
