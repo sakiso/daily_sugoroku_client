@@ -63,7 +63,6 @@ class PlanRepository {
     Ref ref, {
     required int id,
   }) async {
-    //todo: upsertに対応する
     final database = await ref.read(databaseProvider) as Database;
 
     final numberOfRowsDeleted = await database.delete(

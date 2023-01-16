@@ -41,8 +41,6 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                   children: [
                     IconButton(
                       iconSize: 30,
-                      // todo: remove時に上から消えてしまっている
-                      // テキストフォームの中身が更新されてない
                       onPressed: () => {_removePlan(plan.id!)},
                       color: ConstantColors.cautionRed,
                       icon: const Icon(Icons.delete),
