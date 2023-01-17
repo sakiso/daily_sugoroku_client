@@ -6,7 +6,6 @@ import 'pages/sugoroku/sugoroku_page.dart';
 import 'pages/sugoroku_edit/sugoroku_edit_page.dart';
 
 void main() {
-  // todo: 最後無駄なbuildが発生してたりしないかなど調べる
   WidgetsFlutterBinding.ensureInitialized();
 
   initializeDB();

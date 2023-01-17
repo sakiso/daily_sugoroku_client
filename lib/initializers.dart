@@ -8,7 +8,13 @@ initializeDB() async {
   final migrationScripts = {
     /// ここにMigration内容を追記していく。
     /// verが増えたらSetting(Constants)のDBverも更新すること
+    // todo: Null制約が効いていない
     '2': ['ALTER TABLE ${TableNames.plans} ADD scheduledAt TEXT;'],
+    '3': [
+      'ALTER TABLE ${TableNames.plans} MODIFY COLUMN name TEXT NOT NULL default "";',
+      'ALTER TABLE ${TableNames.plans} MODIFY COLUMN name TEXT NOT NULL default 0;',
+      'ALTER TABLE ${TableNames.plans} MODIFY COLUMN name TEXT NOT NULL default "";',
+    ]
   };
 
   await openDatabase(

@@ -26,7 +26,6 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
   @override
   Widget build(BuildContext context) {
     List<Plan> todayPlans = ref.watch(plansOfDayProvider);
-    // todo: ゴミ箱は右側にバツボタン出す
     // todo: 3点のやつで掴んで順番変えられるようにする -> PlanにDisplayOrderが必要
 
     return Scaffold(
@@ -45,10 +44,10 @@ class SugorokuEditPageState extends ConsumerState<SugorokuEditPage> {
                       iconSize: 30,
                       onPressed: () => {_removePlan(plan)},
                       color: ConstantColors.cautionRed,
-                      icon: const Icon(Icons.delete),
+                      icon: const Icon(Icons.cancel),
                     ),
                     Expanded(
-                        flex: 3,
+                        flex: 4,
                         child: SizedBox(
                           height: 50.0,
                           child: TextFormField(

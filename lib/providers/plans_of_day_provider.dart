@@ -64,7 +64,6 @@ class PlansOfDayNotifier extends StateNotifier<List<Plan>> {
   }
 
   void savePlans(List<Plan> plans) async {
-    // todo: こっちのメソッドの名前もsavePlansでいい
     await PlanRepository.savePlans(ref, plans);
   }
 }

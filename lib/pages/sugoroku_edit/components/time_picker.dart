@@ -6,14 +6,12 @@ import '../../../Constants.dart';
 import '../../../providers/plans_of_day_provider.dart';
 import '../../../utilities/format_minutes_to_hhmm.dart';
 
-final _requiredMinutesProvider =
-    StateProvider.autoDispose<int>((ref) => 0); // todo: providersに切り出すか
+final _requiredMinutesProvider = StateProvider.autoDispose<int>((ref) => 0);
 // note: autoDispose修飾子を付けることで画面がpopされたときステートも破棄される
 
 class TimePicker extends ConsumerWidget {
   final Plan targetPlan;
   // todo: 数字キー入力もできるようにしたい
-  // todo: 角はもうちょっと丸めたい
   const TimePicker(this.targetPlan, {Key? key}) : super(key: key);
 
   @override
@@ -22,6 +20,9 @@ class TimePicker extends ConsumerWidget {
     int _requiredMinutes = ref.watch(_requiredMinutesProvider);
 
     return AlertDialog(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(27.0)),
+      ),
       contentPadding: const EdgeInsets.fromLTRB(35, 25, 35, 0),
       content: SingleChildScrollView(
         child: Column(

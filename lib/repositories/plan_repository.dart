@@ -27,7 +27,6 @@ class PlanRepository {
   }
 
   static Future<List<Object?>> savePlans(Ref ref, List<Plan> plans) async {
-    //todo: nullチェックして必須項目が埋まってなければ更新しない。migrateもする
     final database = await ref.watch(databaseProvider) as Database;
 
     final records = plans.map((plan) => plan.toMap()).toList();
